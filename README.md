@@ -71,6 +71,28 @@ the site serves the new database. Because the database URL carries
 `?v=<export_hash>`, browsers pick up the new bytes immediately instead of a
 cached copy.
 
+## Connecting the backend (one-time, done by the repo owner)
+
+The backend repo (`Finance_World_Model`) lives on a compute cluster that cannot host a
+web service, so it *pushes* exports into this repo. Once:
+
+1. Create this repo on GitHub, empty and public, named `lob-world-model-leaderboard`.
+2. On the cluster, make a deploy key and add its public half to this repo with
+   **write access** (Settings → Deploy keys):
+   ```bash
+   ssh-keygen -t ed25519 -f ~/.ssh/lob_leaderboard_deploy -N ""
+   cat ~/.ssh/lob_leaderboard_deploy.pub
+   ```
+3. In the cluster checkout of this repo:
+   ```bash
+   git config core.sshCommand "ssh -i ~/.ssh/lob_leaderboard_deploy -o IdentitiesOnly=yes"
+   git remote add origin git@github.com:<user>/lob-world-model-leaderboard.git
+   git push -u origin main
+   ```
+4. Enable Pages (section above). From then on every
+   `python -m evaluation_db publish --site-checkout <this checkout>` on the cluster
+   commits `data/` and pushes; publish is a no-op when the export hash is unchanged.
+
 ## Layout
 
 ```
