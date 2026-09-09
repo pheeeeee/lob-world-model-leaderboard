@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOB World-Model Leaderboard</title>
+<meta name="description" content="Benchmark boards for next-window limit-order-book world models, read straight from the backend's published SQLite export.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<!-- The boards: one section per test dataset (board_runs), then the evaluation
+     datasets table and the run log. All content is rendered by js/main.js from
+     data/evaluation.sqlite; this file is only the shell. -->
+<body data-page="index">
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>LOB World-Model Leaderboard</h1>
+    <span class="sub">next-window order-flow prediction · frozen evaluation datasets · immutable scored runs</span>
+  </header>
+
+  <nav class="nav" aria-label="Sections">
+    <a href="index.html" aria-current="page">Boards</a>
+    <span class="sep">·</span>
+    <a href="runs.html">Runs</a>
+    <span class="sep">·</span>
+    <a href="datasets.html">Datasets</a>
+  </nav>
+
+  <div class="chips" id="export-chip"></div>
+
+  <main id="app">
+    <p class="loading">Loading the published export…</p>
+  </main>
+
+  <footer>
+    <span>source of truth: immutable artifacts in the backend repo
+      (<span class="mono">evaluation_results/</span> +
+      <span class="mono">registry/*.yml</span>); this site is a derived view</span>
+  </footer>
+
+</div>
+
+<script src="vendor/sql-wasm.js"></script>
+<script src="js/queries.js"></script>
+<script src="js/db.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
