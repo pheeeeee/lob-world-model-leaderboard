@@ -62,8 +62,12 @@ those files belong to the publish step, which is the only writer.
 
 ## GitHub Pages
 
-Settings → Pages → **Deploy from a branch** → branch `main`, folder `/ (root)`.
-`.nojekyll` is present so Jekyll leaves `vendor/`, `assets/` and `data/` alone.
+Settings → Pages → Source: **GitHub Actions**. The workflow in
+`.github/workflows/pages.yml` uploads the repository root as-is (there is no build
+step) and deploys it on every push to `main`; it can also be started by hand from the
+Actions tab ("Run workflow"). Source **Deploy from a branch** (`main` / `/ (root)`)
+works too — `.nojekyll` is present so Jekyll leaves `vendor/`, `assets/` and `data/`
+alone — but then the workflow is redundant.
 
 A new export arrives like this: the cluster job writes the three files into
 `data/`, commits and pushes to `main`; Pages redeploys within about a minute and
