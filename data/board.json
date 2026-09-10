@@ -1,14 +1,14 @@
 {
  "export_meta": {
   "schema_version": 1,
-  "export_hash": "sha256:fe2941e0c897fb63cd10679c5d35669c85a5b8bf1dc07c236f47e4a143d59f75",
-  "exported_at_utc": "2026-09-10T03:25:50+00:00",
+  "export_hash": "sha256:3e88dd991dadc26fe4e832a5e0dfff9eb7460b816ed96add07b1b5a5f14d5d94",
+  "exported_at_utc": "2026-09-10T04:40:06+00:00",
   "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
   "backend_git_dirty": 1,
-  "n_runs": 3,
+  "n_runs": 5,
   "n_models": 8,
   "n_datasets": 10,
-  "n_metrics": 3
+  "n_metrics": 7
  },
  "metrics": [
   {
@@ -22,6 +22,39 @@
     "sided_w1",
     "sided_w1_bid",
     "sided_w1_ask"
+   ]
+  },
+  {
+   "metric_id": "energy_score",
+   "primary_output": "energy_score",
+   "semantic_version": "1.0.0",
+   "direction": "lower_is_better",
+   "unit": "dimensionless",
+   "summary": "A PROPER scoring rule for the predicted next-window flow DISTRIBUTION: ES(P,y) = E rho(X,y) - 0.5 E rho(X,X'), with rho a negative-type metric built from the project's shape/mass decomposition (1-D Wasserstein-1 on the normalized side shape, scaled by kappa, plus beta * |log1p mass| difference). Unlike every other metric on this board — all of which average a pairwise distance over draws and are therefore minimized by a collapsed point forecast — the energy score rewards honest dispersion: es_diversity_term going to zero exposes mode collapse that sided_w1 and full_field_ot cannot see. Needs R >= 2 draws to estimate the diversity term; a single draw is scored as the exact energy score of a point-mass forecast and counted separately.",
+   "outputs": [
+    "energy_score",
+    "energy_score_bid",
+    "energy_score_ask",
+    "es_target_term",
+    "es_diversity_term"
+   ]
+  },
+  {
+   "metric_id": "full_field_ot",
+   "primary_output": "d_full",
+   "semantic_version": "1.0.0",
+   "direction": "lower_is_better",
+   "unit": "share_ticks",
+   "summary": "The project's headline metric: a mass-aware optimal-transport comparison of the whole unnormalized volume-at-price field, reported with the shape/mass decomposition that produces it. d_full = min(m_P, m_Q) * d_shape + lam * d_mass (share*ticks) is the cost of an explicit partial-transport plan — move the common mass into the right shape, then create/destroy the residual at lam ticks/share — and upper-bounds the true TV-penalized unbalanced OT cost. Closed form via the 1-D CDF-difference identity, no OT solver. Unlike sided_w1 (shape-only) it is TOTAL: defined even when one side is empty, because zero common mass incurs no transport cost. Draws are averaged per sample (a point functional, not a proper score — see energy_score); samples are averaged for the dataset value.",
+   "outputs": [
+    "d_full",
+    "d_full_bid",
+    "d_full_ask",
+    "d_shape",
+    "d_shape_bid",
+    "d_shape_ask",
+    "d_mass",
+    "d_mass_rel"
    ]
   },
   {
@@ -48,6 +81,36 @@
     "ntve",
     "ntve_bid",
     "ntve_ask"
+   ]
+  },
+  {
+   "metric_id": "rank_calibration",
+   "primary_output": "rank_calibration",
+   "semantic_version": "1.0.0",
+   "direction": "lower_is_better",
+   "unit": "dimensionless",
+   "summary": "The rank-histogram (Talagrand / PIT) calibration diagnostic: the rank of the realization among the R draws is uniform on {0..R} iff the ensemble is drawn from the correct predictive law. Reports the reliability index normalized to [0,1] and, more usefully, the SIGNED coverage_error — negative means the realization falls outside the ensemble range too often (over-confident, spread too narrow), positive means too wide. Ties are broken by a deterministic seeded randomization, so the number is reproducible and models share tie-breaks. CORPUS-level: needs the whole dataset and a constant draw count. NOT a quality score — a climatological forecast that ignores the conditioning scores a perfect 0 — so read it against energy_score and total_volume_crps, never alone.",
+   "outputs": [
+    "rank_calibration",
+    "reliability_index",
+    "coverage_inside",
+    "coverage_nominal",
+    "coverage_error"
+   ]
+  },
+  {
+   "metric_id": "total_volume_crps",
+   "primary_output": "total_volume_crps",
+   "semantic_version": "1.0.0",
+   "direction": "lower_is_better",
+   "unit": "log1p_shares",
+   "summary": "The Continuous Ranked Probability Score of the predicted per-side TOTAL VOLUME — the mass axis of the flow field scored as a distribution rather than as a point. CRPS = E|X - y| - 0.5 E|X - X'| is the 1-D case of the energy score and, because the real line is of STRONG negative type, it is STRICTLY proper: the expected score is uniquely minimized by the true conditional law of the volume. Stands to norm_total_volume_error exactly as energy_score stands to sided_w1. Total (no UNDEFINED path): an empty side scores log1p(0) = 0, not a gap. crps_spread_term exposes a model that predicts one volume per window.",
+   "outputs": [
+    "total_volume_crps",
+    "total_volume_crps_bid",
+    "total_volume_crps_ask",
+    "crps_target_term",
+    "crps_spread_term"
    ]
   }
  ],
@@ -321,9 +384,9 @@
  "boards": [
   {
    "test_dataset_id": "dow30_valday_flow_2026-06-23",
-   "evaluation_run_id": "eval__20260820_dow30_leaderboard__cfg1bb0ec430742__20260820T180634Z",
-   "run_created_at_utc": "2026-08-20T18:06:34+00:00",
-   "study_id": "20260820_dow30_leaderboard",
+   "evaluation_run_id": "eval__20260910_distributional_metrics__cfg07d62a8affa5__20260910T043619Z",
+   "run_created_at_utc": "2026-09-10T04:36:19+00:00",
+   "study_id": "20260910_distributional_metrics",
    "models": [
     {
      "model_id": "skewnorm_mixture__base",
@@ -334,18 +397,40 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
+      "energy_score": 2.093401509248333,
+      "full_field_ot": 61613486.03470621,
       "log1p_flow_mse": 0.8008301005217484,
       "norm_total_volume_error": 0.3284529746800279,
-      "sided_w1": 88.8365450321702
+      "rank_calibration": 0.0507692307692307,
+      "sided_w1": 88.8365450321702,
+      "total_volume_crps": 0.3166706086049289
+     }
+    },
+    {
+     "model_id": "skewnorm_mixture__kmax2",
+     "model_name": "skewnorm_mixture",
+     "prediction_id": "pred_fff215b4d409",
+     "checkpoint": "params.yaml",
+     "n_test_samples": 1950,
+     "n_generation_draws": 1,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 4.154436541075247,
+      "full_field_ot": 109510001.83142772,
+      "log1p_flow_mse": 2.4327226480519366,
+      "norm_total_volume_error": 0.328453089952992,
+      "rank_calibration": 0.0507692307692307,
+      "sided_w1": 191.88829099902287,
+      "total_volume_crps": 0.3166707210947901
      }
     }
    ]
   },
   {
    "test_dataset_id": "valday_flow_v1",
-   "evaluation_run_id": "eval__20260909_skewnorm_mixture_kmax2__cfg2c7ea08741d4__20260910T032413Z",
-   "run_created_at_utc": "2026-09-10T03:24:13+00:00",
-   "study_id": "20260909_skewnorm_mixture_kmax2",
+   "evaluation_run_id": "eval__20260910_distributional_metrics__cfgb384187aed62__20260910T043558Z",
+   "run_created_at_utc": "2026-09-10T04:35:58+00:00",
+   "study_id": "20260910_distributional_metrics",
    "models": [
     {
      "model_id": "dit_v1__dit__emory4d_v1__s0__cfg46e92647cec0",
@@ -356,9 +441,13 @@
      "n_generation_draws": 4,
      "row_status": "ok",
      "values": {
+      "energy_score": 22.268363042932886,
+      "full_field_ot": 172226118.91435075,
       "log1p_flow_mse": 0.5231757434228027,
       "norm_total_volume_error": 0.4994089259633739,
-      "sided_w1": 1108.212816768127
+      "rank_calibration": 0.8796583850931677,
+      "sided_w1": 1108.212816768127,
+      "total_volume_crps": 0.619729002975672
      }
     },
     {
@@ -370,9 +459,13 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
+      "energy_score": 23.495025088434684,
+      "full_field_ot": 337653865.84964806,
       "log1p_flow_mse": 0.6697071217628415,
       "norm_total_volume_error": 0.2840126242015787,
-      "sided_w1": 1160.9977655466785
+      "rank_calibration": 0.0046583850931676,
+      "sided_w1": 1160.9977655466785,
+      "total_volume_crps": 0.2750697775011126
      }
     },
     {
@@ -384,9 +477,13 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
+      "energy_score": 3.0011790952920148,
+      "full_field_ot": 50557052.15295241,
       "log1p_flow_mse": 0.8175822805417265,
       "norm_total_volume_error": 0.2839996060292016,
-      "sided_w1": 136.30599642389555
+      "rank_calibration": 0.0046583850931676,
+      "sided_w1": 136.30599642389555,
+      "total_volume_crps": 0.2750591668141039
      }
     },
     {
@@ -398,15 +495,37 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
+      "energy_score": 7.027404866956345,
+      "full_field_ot": 101134686.7966751,
       "log1p_flow_mse": 3.4027052390721173,
       "norm_total_volume_error": 0.2840107585254341,
-      "sided_w1": 337.6168277089336
+      "rank_calibration": 0.0046583850931676,
+      "sided_w1": 337.6168277089336,
+      "total_volume_crps": 0.2750683127776736
      }
     }
    ]
   }
  ],
  "runs": [
+  {
+   "evaluation_run_id": "eval__20260910_distributional_metrics__cfg07d62a8affa5__20260910T043619Z",
+   "study_id": "20260910_distributional_metrics",
+   "created_at_utc": "2026-09-10T04:36:19+00:00",
+   "status": "ok",
+   "n_inputs": 2,
+   "n_metrics": 7,
+   "content_hash": "sha256:5e04930b34b28a08f4cccd74fc44ebe7f8ea0a58a995568c8755100cc483d1ff"
+  },
+  {
+   "evaluation_run_id": "eval__20260910_distributional_metrics__cfgb384187aed62__20260910T043558Z",
+   "study_id": "20260910_distributional_metrics",
+   "created_at_utc": "2026-09-10T04:35:58+00:00",
+   "status": "ok",
+   "n_inputs": 4,
+   "n_metrics": 7,
+   "content_hash": "sha256:a97052446a162ce1fdfe2e3d6bdad1dfa2fc2e03776478b482d9ceb2d044cd61"
+  },
   {
    "evaluation_run_id": "eval__20260909_skewnorm_mixture_kmax2__cfg2c7ea08741d4__20260910T032413Z",
    "study_id": "20260909_skewnorm_mixture_kmax2",
