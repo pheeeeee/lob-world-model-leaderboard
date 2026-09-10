@@ -3,18 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Run log · LOB World-Model Leaderboard</title>
-<meta name="description" content="Every completed scoring run: its results rows, the metric versions it used, and the provenance recorded in its manifest.">
+<title>Samples · LOB World-Model Leaderboard</title>
+<meta name="description" content="Per evaluation window: the input order-flow histogram every model conditions on, the realized next window, and each model's predicted draw - same axes, same scale.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/style.css">
 </head>
-<!-- The full run log. Selecting a run renders its scored rows (model x metric),
-     the metric versions/parameters it ran, and its manifest provenance (study,
-     git commit, command). Rendered by js/main.js from data/evaluation.sqlite. -->
-<body data-page="runs">
+<!-- The pictures behind the board numbers: for one evaluation window, the INPUT
+     histogram (previous window) every model conditions on, the realized TARGET
+     (next window), and each model's predicted draw - one small multiple each, on
+     identical axes and one shared y scale. Rendered by js/samples.js from
+     data/samples.json; this file is only the shell. -->
+<body data-page="samples">
 <div class="wrap">
 
   <header class="masthead">
@@ -25,9 +27,9 @@
   <nav class="nav" aria-label="Sections">
     <a href="index.html">Boards</a>
     <span class="sep">·</span>
-    <a href="samples.html">Samples</a>
+    <a href="samples.html" aria-current="page">Samples</a>
     <span class="sep">·</span>
-    <a href="runs.html" aria-current="page">Runs</a>
+    <a href="runs.html">Runs</a>
     <span class="sep">·</span>
     <a href="datasets.html">Datasets</a>
   </nav>
@@ -35,7 +37,7 @@
   <div class="chips" id="export-chip"></div>
 
   <main id="app">
-    <p class="loading">Loading the run log…</p>
+    <p class="loading">Loading the sample windows…</p>
   </main>
 
   <footer>
@@ -46,10 +48,7 @@
 
 </div>
 
-<script src="vendor/sql-wasm.js"></script>
-<script src="js/queries.js"></script>
-<script src="js/db.js"></script>
 <script src="js/render.js"></script>
-<script src="js/main.js"></script>
+<script src="js/samples.js"></script>
 </body>
 </html>
