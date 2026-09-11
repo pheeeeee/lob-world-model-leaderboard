@@ -1,12 +1,12 @@
 {
  "export_meta": {
   "schema_version": 1,
-  "export_hash": "sha256:3e88dd991dadc26fe4e832a5e0dfff9eb7460b816ed96add07b1b5a5f14d5d94",
-  "exported_at_utc": "2026-09-10T04:40:06+00:00",
+  "export_hash": "sha256:58104ba3765becada5fa85dc28423b690d5c5178c2c829607b3b143a7fc9fe3a",
+  "exported_at_utc": "2026-09-11T15:58:24+00:00",
   "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
   "backend_git_dirty": 1,
-  "n_runs": 5,
-  "n_models": 8,
+  "n_runs": 6,
+  "n_models": 11,
   "n_datasets": 10,
   "n_metrics": 7
  },
@@ -384,10 +384,46 @@
  "boards": [
   {
    "test_dataset_id": "dow30_valday_flow_2026-06-23",
-   "evaluation_run_id": "eval__20260910_distributional_metrics__cfg07d62a8affa5__20260910T043619Z",
-   "run_created_at_utc": "2026-09-10T04:36:19+00:00",
-   "study_id": "20260910_distributional_metrics",
+   "evaluation_run_id": "eval__20260909_maskdit_dow30_training__cfg498edf34cbff__20260911T155633Z",
+   "run_created_at_utc": "2026-09-11T15:56:33+00:00",
+   "study_id": "20260909_maskdit_dow30_training",
    "models": [
+    {
+     "model_id": "order_flow_maskdit__mask__dow30_v2__s42__cfg6660a508eb19",
+     "model_name": "order_flow_maskdit",
+     "prediction_id": "pred_a5d1e0a38b80",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 43.73716685916187,
+      "full_field_ot": 458835918.4058269,
+      "log1p_flow_mse": 5.664677173244432,
+      "norm_total_volume_error": 6.009153182126473,
+      "rank_calibration": 0.048076923076923,
+      "sided_w1": 2200.3043217573804,
+      "total_volume_crps": 0.7503855918088039
+     }
+    },
+    {
+     "model_id": "skewnorm__band",
+     "model_name": "skewnorm",
+     "prediction_id": "pred_8b0048dfdc8c",
+     "checkpoint": "params.yaml",
+     "n_test_samples": 1950,
+     "n_generation_draws": 1,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 14.994747036582982,
+      "full_field_ot": 450514861.5541477,
+      "log1p_flow_mse": 0.7221707147244288,
+      "norm_total_volume_error": 0.328453089952992,
+      "rank_calibration": 0.0507692307692307,
+      "sided_w1": 733.9038157744096,
+      "total_volume_crps": 0.3166707210947901
+     }
+    },
     {
      "model_id": "skewnorm_mixture__base",
      "model_name": "skewnorm_mixture",
@@ -508,6 +544,15 @@
   }
  ],
  "runs": [
+  {
+   "evaluation_run_id": "eval__20260909_maskdit_dow30_training__cfg498edf34cbff__20260911T155633Z",
+   "study_id": "20260909_maskdit_dow30_training",
+   "created_at_utc": "2026-09-11T15:56:33+00:00",
+   "status": "ok",
+   "n_inputs": 4,
+   "n_metrics": 7,
+   "content_hash": "sha256:1429e513a027c79b8108e804e447b60016d067f76e1b65ca99fe59fc1ad6a21c"
+  },
   {
    "evaluation_run_id": "eval__20260910_distributional_metrics__cfg07d62a8affa5__20260910T043619Z",
    "study_id": "20260910_distributional_metrics",
