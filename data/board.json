@@ -1,11 +1,11 @@
 {
  "export_meta": {
   "schema_version": 1,
-  "export_hash": "sha256:58104ba3765becada5fa85dc28423b690d5c5178c2c829607b3b143a7fc9fe3a",
-  "exported_at_utc": "2026-09-11T15:58:24+00:00",
+  "export_hash": "sha256:d030ffaa188052f11c07c2f5bc0166261a2725fb7872219b35ba074c233bff63",
+  "exported_at_utc": "2026-09-11T16:30:04+00:00",
   "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
   "backend_git_dirty": 1,
-  "n_runs": 6,
+  "n_runs": 7,
   "n_models": 11,
   "n_datasets": 10,
   "n_metrics": 7
@@ -384,9 +384,9 @@
  "boards": [
   {
    "test_dataset_id": "dow30_valday_flow_2026-06-23",
-   "evaluation_run_id": "eval__20260909_maskdit_dow30_training__cfg498edf34cbff__20260911T155633Z",
-   "run_created_at_utc": "2026-09-11T15:56:33+00:00",
-   "study_id": "20260909_maskdit_dow30_training",
+   "evaluation_run_id": "eval__20260910_maskdit_orders_training__cfg1200618d7371__20260911T162706Z",
+   "run_created_at_utc": "2026-09-11T16:27:06+00:00",
+   "study_id": "20260910_maskdit_orders_training",
    "models": [
     {
      "model_id": "order_flow_maskdit__mask__dow30_v2__s42__cfg6660a508eb19",
@@ -404,6 +404,24 @@
       "rank_calibration": 0.048076923076923,
       "sided_w1": 2200.3043217573804,
       "total_volume_crps": 0.7503855918088039
+     }
+    },
+    {
+     "model_id": "order_flow_maskdit_orders__mask__dow30_v2__s42__cfgb5542c355bdf",
+     "model_name": "order_flow_maskdit_orders",
+     "prediction_id": "pred_4ab09897dab9",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 43.71262533864618,
+      "full_field_ot": 463692015.0729128,
+      "log1p_flow_mse": 5.480015338881892,
+      "norm_total_volume_error": 6.014763735378856,
+      "rank_calibration": 0.0503205128205128,
+      "sided_w1": 2199.9510171635607,
+      "total_volume_crps": 0.7402728893795764
      }
     },
     {
@@ -544,6 +562,15 @@
   }
  ],
  "runs": [
+  {
+   "evaluation_run_id": "eval__20260910_maskdit_orders_training__cfg1200618d7371__20260911T162706Z",
+   "study_id": "20260910_maskdit_orders_training",
+   "created_at_utc": "2026-09-11T16:27:06+00:00",
+   "status": "ok",
+   "n_inputs": 5,
+   "n_metrics": 7,
+   "content_hash": "sha256:7d18071e41bb7186a2677bfcd5f46401a928c4b0940d284f09e4c62d88070014"
+  },
   {
    "evaluation_run_id": "eval__20260909_maskdit_dow30_training__cfg498edf34cbff__20260911T155633Z",
    "study_id": "20260909_maskdit_dow30_training",
