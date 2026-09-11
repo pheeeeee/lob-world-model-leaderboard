@@ -1,11 +1,11 @@
 {
  "export_meta": {
   "schema_version": 1,
-  "export_hash": "sha256:d030ffaa188052f11c07c2f5bc0166261a2725fb7872219b35ba074c233bff63",
-  "exported_at_utc": "2026-09-11T16:30:04+00:00",
+  "export_hash": "sha256:081da6f995a0d18b82418fd41892f623d04d11d2e8194291de726bc427c0a14b",
+  "exported_at_utc": "2026-09-11T19:01:58+00:00",
   "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
   "backend_git_dirty": 1,
-  "n_runs": 7,
+  "n_runs": 9,
   "n_models": 11,
   "n_datasets": 10,
   "n_metrics": 7
@@ -384,44 +384,80 @@
  "boards": [
   {
    "test_dataset_id": "dow30_valday_flow_2026-06-23",
-   "evaluation_run_id": "eval__20260910_maskdit_orders_training__cfg1200618d7371__20260911T162706Z",
-   "run_created_at_utc": "2026-09-11T16:27:06+00:00",
-   "study_id": "20260910_maskdit_orders_training",
+   "evaluation_run_id": "eval__20260909_orderflowdit_grpo__cfgf0f51269095c__20260911T185701Z",
+   "run_created_at_utc": "2026-09-11T18:57:01+00:00",
+   "study_id": "20260909_orderflowdit_grpo",
    "models": [
     {
-     "model_id": "order_flow_maskdit__mask__dow30_v2__s42__cfg6660a508eb19",
-     "model_name": "order_flow_maskdit",
-     "prediction_id": "pred_a5d1e0a38b80",
+     "model_id": "order_flow_dit__dit__dow30_v1__s42__cfgc51a313e2251",
+     "model_name": "order_flow_dit",
+     "prediction_id": "pred_4f8932ff0225",
      "checkpoint": "ckpt/best.pt",
      "n_test_samples": 1950,
      "n_generation_draws": 4,
      "row_status": "ok",
      "values": {
-      "energy_score": 43.73716685916187,
-      "full_field_ot": 458835918.4058269,
-      "log1p_flow_mse": 5.664677173244432,
-      "norm_total_volume_error": 6.009153182126473,
-      "rank_calibration": 0.048076923076923,
-      "sided_w1": 2200.3043217573804,
-      "total_volume_crps": 0.7503855918088039
+      "energy_score": 2.3074674228822847,
+      "full_field_ot": 105885971.04212797,
+      "log1p_flow_mse": 0.6830961317094602,
+      "norm_total_volume_error": 1.138215415114409,
+      "rank_calibration": 0.6163461538461538,
+      "sided_w1": 146.17479188615457,
+      "total_volume_crps": 0.5244890771003602
      }
     },
     {
-     "model_id": "order_flow_maskdit_orders__mask__dow30_v2__s42__cfgb5542c355bdf",
-     "model_name": "order_flow_maskdit_orders",
-     "prediction_id": "pred_4ab09897dab9",
+     "model_id": "order_flow_dit__dit__dow30_v2__s42__cfg75175188ab25",
+     "model_name": "order_flow_dit",
+     "prediction_id": "pred_763bcc1c8911",
      "checkpoint": "ckpt/best.pt",
      "n_test_samples": 1950,
      "n_generation_draws": 4,
      "row_status": "ok",
      "values": {
-      "energy_score": 43.71262533864618,
-      "full_field_ot": 463692015.0729128,
-      "log1p_flow_mse": 5.480015338881892,
-      "norm_total_volume_error": 6.014763735378856,
-      "rank_calibration": 0.0503205128205128,
-      "sided_w1": 2199.9510171635607,
-      "total_volume_crps": 0.7402728893795764
+      "energy_score": 2.152214251823749,
+      "full_field_ot": 110828592.52793388,
+      "log1p_flow_mse": 0.6561087484101908,
+      "norm_total_volume_error": 1.0578311941572889,
+      "rank_calibration": 0.5592948717948718,
+      "sided_w1": 149.2198750084077,
+      "total_volume_crps": 0.459686296600894
+     }
+    },
+    {
+     "model_id": "order_flow_dit__dit__dow30_v2__s42__cfge91d5d1c3334",
+     "model_name": "order_flow_dit",
+     "prediction_id": "pred_a636d4436656",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 1.5912315098965144,
+      "full_field_ot": 60074236.9921173,
+      "log1p_flow_mse": 0.5992270223761408,
+      "norm_total_volume_error": 0.4473343897921775,
+      "rank_calibration": 0.2560897435897435,
+      "sided_w1": 123.55215740094684,
+      "total_volume_crps": 0.2826773689449318
+     }
+    },
+    {
+     "model_id": "order_flow_dit_grpo__grpo__dow30_v2__s42__cfg394eed77cff6",
+     "model_name": "order_flow_dit_grpo",
+     "prediction_id": "pred_4e86d9c705a3",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 1.493841573203054,
+      "full_field_ot": 62025022.71239472,
+      "log1p_flow_mse": 0.5487675914834137,
+      "norm_total_volume_error": 0.3819483652132173,
+      "rank_calibration": 0.2685897435897436,
+      "sided_w1": 107.70492212935396,
+      "total_volume_crps": 0.2431501986477326
      }
     },
     {
@@ -435,7 +471,7 @@
      "values": {
       "energy_score": 14.994747036582982,
       "full_field_ot": 450514861.5541477,
-      "log1p_flow_mse": 0.7221707147244288,
+      "log1p_flow_mse": 0.722170714724429,
       "norm_total_volume_error": 0.328453089952992,
       "rank_calibration": 0.0507692307692307,
       "sided_w1": 733.9038157744096,
@@ -451,12 +487,12 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
-      "energy_score": 2.093401509248333,
-      "full_field_ot": 61613486.03470621,
-      "log1p_flow_mse": 0.8008301005217484,
+      "energy_score": 2.0934015092483333,
+      "full_field_ot": 61613486.03470618,
+      "log1p_flow_mse": 0.8008301005217485,
       "norm_total_volume_error": 0.3284529746800279,
       "rank_calibration": 0.0507692307692307,
-      "sided_w1": 88.8365450321702,
+      "sided_w1": 88.83654503217022,
       "total_volume_crps": 0.3166706086049289
      }
     },
@@ -470,8 +506,8 @@
      "row_status": "ok",
      "values": {
       "energy_score": 4.154436541075247,
-      "full_field_ot": 109510001.83142772,
-      "log1p_flow_mse": 2.4327226480519366,
+      "full_field_ot": 109510001.83142756,
+      "log1p_flow_mse": 2.432722648051937,
       "norm_total_volume_error": 0.328453089952992,
       "rank_calibration": 0.0507692307692307,
       "sided_w1": 191.88829099902287,
@@ -562,6 +598,24 @@
   }
  ],
  "runs": [
+  {
+   "evaluation_run_id": "eval__20260909_orderflowdit_grpo__cfgf0f51269095c__20260911T185701Z",
+   "study_id": "20260909_orderflowdit_grpo",
+   "created_at_utc": "2026-09-11T18:57:01+00:00",
+   "status": "ok",
+   "n_inputs": 7,
+   "n_metrics": 7,
+   "content_hash": "sha256:6056dc1fe8d973f61d99137b2bef58080f2f4b9f184fca16ebda1519f8a1b247"
+  },
+  {
+   "evaluation_run_id": "eval__20260820_dow30_leaderboard__cfg53c36d1eb4e7__20260911T183038Z",
+   "study_id": "20260820_dow30_leaderboard",
+   "created_at_utc": "2026-09-11T18:30:38+00:00",
+   "status": "ok",
+   "n_inputs": 5,
+   "n_metrics": 7,
+   "content_hash": "sha256:35f4ccccddbafe3c77648d36ce63ed2f7f9e5d4a73fa7bca64053d2d66b7b804"
+  },
   {
    "evaluation_run_id": "eval__20260910_maskdit_orders_training__cfg1200618d7371__20260911T162706Z",
    "study_id": "20260910_maskdit_orders_training",
