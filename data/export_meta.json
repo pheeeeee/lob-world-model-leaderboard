@@ -1,25 +1,26 @@
 {
  "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
  "backend_git_dirty": 1,
- "export_hash": "sha256:081da6f995a0d18b82418fd41892f623d04d11d2e8194291de726bc427c0a14b",
- "exported_at_utc": "2026-09-11T19:01:58+00:00",
+ "export_hash": "sha256:3a60d9b178b4909eedcc08394c6c84eba0c141658082dbf0daf14bb8e22904db",
+ "exported_at_utc": "2026-09-19T05:26:20+00:00",
  "files": {
   "board": "board.json",
   "db": "evaluation.sqlite",
   "samples": "samples.json"
  },
- "n_datasets": 10,
+ "n_datasets": 12,
  "n_metrics": 7,
- "n_models": 11,
- "n_runs": 9,
+ "n_models": 15,
+ "n_runs": 11,
  "samples": {
-  "bytes": 3808477,
+  "bytes": 6008254,
   "windows": {
    "dow30_valday_flow_2026-06-23": 30,
+   "dow30_valday_flow_lag1_2026-06-23": 30,
    "valday_flow_v1": 10
   }
  },
- "samples_sha256": "84399d3ba561d7b20cfdd6fa2d26b9b90f39001024bbcd75aebd5af59cc9ecdc",
+ "samples_sha256": "9b118ba0870dfc03402251c77388031d5ad64340487bf478ef21367b2ff3f74d",
  "schema_version": 1,
  "unmapped_results_columns": []
 }

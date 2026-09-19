@@ -1,13 +1,13 @@
 {
  "export_meta": {
   "schema_version": 1,
-  "export_hash": "sha256:081da6f995a0d18b82418fd41892f623d04d11d2e8194291de726bc427c0a14b",
-  "exported_at_utc": "2026-09-11T19:01:58+00:00",
+  "export_hash": "sha256:3a60d9b178b4909eedcc08394c6c84eba0c141658082dbf0daf14bb8e22904db",
+  "exported_at_utc": "2026-09-19T05:26:20+00:00",
   "backend_git_commit": "41236adb0e0aa0d55eee4f82d1bf7864f00f6f0d",
   "backend_git_dirty": 1,
-  "n_runs": 9,
-  "n_models": 11,
-  "n_datasets": 10,
+  "n_runs": 11,
+  "n_models": 15,
+  "n_datasets": 12,
   "n_metrics": 7
  },
  "metrics": [
@@ -220,6 +220,32 @@
    "source_dataset_ids": []
   },
   {
+   "dataset_id": "dow30_lobster_20260511_20260605",
+   "kind": "raw",
+   "role": null,
+   "path": "data/sample_lobster/dow30_2026-05-11_2026-06-05/",
+   "task": null,
+   "sample_count": null,
+   "content_hash": null,
+   "added": "2026-09-14",
+   "source": "LOBSTER data API via LOBloader; studies/20260825_dow30_data_expansion/scripts/download_days.py",
+   "date": "2026-05-11 .. 2026-06-05",
+   "symbols": "Dow 30 (membership as of Nov 2024)",
+   "summary": "Backfill range behind the v3 (29-train-day) OrderFlowDiT split: train 2026-05-11..2026-06-22, val 2026-06-23, test 2026-06-24 (both unchanged). Every day is EARLIER than the val day (no lookahead). One range request per symbol = 30 API requests. Downloaded by studies/20260914_dow30_v3_large/run_download_v3.sbatch. Keep on the scratch-protect list (inside Finance_World_Model, which is).",
+   "prov_task": null,
+   "prov_source": null,
+   "flow_engine": null,
+   "builder_script": null,
+   "split_name": null,
+   "split_note": null,
+   "condition_ref_grammar": null,
+   "price_tick": null,
+   "flow_volume": null,
+   "pinned_kind": null,
+   "pinned_count": null,
+   "source_dataset_ids": []
+  },
+  {
    "dataset_id": "dow30_lobster_20260608_20260624",
    "kind": "raw",
    "role": null,
@@ -326,6 +352,34 @@
    ]
   },
   {
+   "dataset_id": "dow30_valday_flow_lag1_2026-06-23",
+   "kind": "derived",
+   "role": "test",
+   "path": "data/evaluation/dow30_valday_flow_lag1_2026-06-23",
+   "task": "next_window_flow_dow30",
+   "sample_count": 1920,
+   "content_hash": "sha256:2444a04c09e9262878516451b857285a05ab7d7b19410d9f08f80aa246342dad",
+   "added": "2026-09-14",
+   "source": null,
+   "date": null,
+   "symbols": null,
+   "summary": "FROZEN Dow 30 evaluation bundle for the LAG1 (lagged-snapshot) setting: next-window ADD-flow on 2026-06-23, all 30 constituents x 64 target windows j = 2..65 (dw=300 s, 10:30-16:00 ET). Targets and flow inputs are EQUAL to dow30_valday_flow_2026-06-23 on every shared sample and sample ids are shared by construction (same identity fields + task_version); j=1 is excluded because the prep cache holds no snapshot at boundary 0. Condition refs live in the dow30-lag1 namespace and resolve to the snapshot at boundary j-1 (X_{t-dw}) — a lag0 checkpoint is refused on them. Built straight from the raw LOBSTER message streams via the audited order_flow_histogram_v1 flow engine (closed='left', absolute penny ticks). Immutable (SUCCESS + SHA256SUMS). Built by studies/20260914_lagged_snapshot_lag1; plan docs/plans/20260914_lagged-snapshot-setting.md.",
+   "prov_task": "next_window_flow_dow30",
+   "prov_source": "raw LOBSTER full-depth message streams (level 0)",
+   "flow_engine": "order_flow_histogram_v1.flow_engine flow_histograms_from_csv(closed='left', price_format='auto', subpenny_policy='side_outward', ADD-only)",
+   "builder_script": "studies/20260914_lagged_snapshot_lag1/scripts/build_lag1_evalset.py",
+   "split_name": "eval",
+   "split_note": "Dow 30 evaluation day 2026-06-23 under the LAG1 setting; same day, targets and flow inputs as dow30_valday_flow_2026-06-23",
+   "condition_ref_grammar": "dow30-lag1-messages/v1:<symbol>:<trading_date>:dw300:w<window_index>",
+   "price_tick": "ABSOLUTE penny ticks (tick = $0.01), per docs/specs/20260727_unified-flow-histogram-format.md",
+   "flow_volume": "unnormalized realized ADD-flow volume (shares)",
+   "pinned_kind": "archives",
+   "pinned_count": 30,
+   "source_dataset_ids": [
+    "dow30_lobster_20260623"
+   ]
+  },
+  {
    "dataset_id": "lobster_goog_sample",
    "kind": "sample",
    "role": null,
@@ -384,9 +438,9 @@
  "boards": [
   {
    "test_dataset_id": "dow30_valday_flow_2026-06-23",
-   "evaluation_run_id": "eval__20260909_orderflowdit_grpo__cfgf0f51269095c__20260911T185701Z",
-   "run_created_at_utc": "2026-09-11T18:57:01+00:00",
-   "study_id": "20260909_orderflowdit_grpo",
+   "evaluation_run_id": "eval__20260914_lagged_snapshot_lag1__cfgf76624f5195b__20260914T233857Z",
+   "run_created_at_utc": "2026-09-14T23:38:57+00:00",
+   "study_id": "20260914_lagged_snapshot_lag1",
    "models": [
     {
      "model_id": "order_flow_dit__dit__dow30_v1__s42__cfgc51a313e2251",
@@ -399,7 +453,7 @@
      "values": {
       "energy_score": 2.3074674228822847,
       "full_field_ot": 105885971.04212797,
-      "log1p_flow_mse": 0.6830961317094602,
+      "log1p_flow_mse": 0.68309613170946,
       "norm_total_volume_error": 1.138215415114409,
       "rank_calibration": 0.6163461538461538,
       "sided_w1": 146.17479188615457,
@@ -439,7 +493,7 @@
       "norm_total_volume_error": 0.4473343897921775,
       "rank_calibration": 0.2560897435897435,
       "sided_w1": 123.55215740094684,
-      "total_volume_crps": 0.2826773689449318
+      "total_volume_crps": 0.2826773689449317
      }
     },
     {
@@ -461,6 +515,42 @@
      }
     },
     {
+     "model_id": "order_flow_maskdit__mask__dow30_v2__s42__cfg6660a508eb19",
+     "model_name": "order_flow_maskdit",
+     "prediction_id": "pred_a5d1e0a38b80",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 43.73716685916187,
+      "full_field_ot": 458835918.4058269,
+      "log1p_flow_mse": 5.664677173244432,
+      "norm_total_volume_error": 6.009153182126473,
+      "rank_calibration": 0.048076923076923,
+      "sided_w1": 2200.3043217573804,
+      "total_volume_crps": 0.7503855918088039
+     }
+    },
+    {
+     "model_id": "order_flow_maskdit_orders__mask__dow30_v2__s42__cfgb5542c355bdf",
+     "model_name": "order_flow_maskdit_orders",
+     "prediction_id": "pred_4ab09897dab9",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1950,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 43.71262533864618,
+      "full_field_ot": 463692015.0729128,
+      "log1p_flow_mse": 5.480015338881892,
+      "norm_total_volume_error": 6.014763735378856,
+      "rank_calibration": 0.0503205128205128,
+      "sided_w1": 2199.9510171635607,
+      "total_volume_crps": 0.7402728893795764
+     }
+    },
+    {
      "model_id": "skewnorm__band",
      "model_name": "skewnorm",
      "prediction_id": "pred_8b0048dfdc8c",
@@ -471,7 +561,7 @@
      "values": {
       "energy_score": 14.994747036582982,
       "full_field_ot": 450514861.5541477,
-      "log1p_flow_mse": 0.722170714724429,
+      "log1p_flow_mse": 0.7221707147244288,
       "norm_total_volume_error": 0.328453089952992,
       "rank_calibration": 0.0507692307692307,
       "sided_w1": 733.9038157744096,
@@ -487,13 +577,31 @@
      "n_generation_draws": 1,
      "row_status": "ok",
      "values": {
-      "energy_score": 2.0934015092483333,
-      "full_field_ot": 61613486.03470618,
-      "log1p_flow_mse": 0.8008301005217485,
+      "energy_score": 2.093401509248333,
+      "full_field_ot": 61613486.03470621,
+      "log1p_flow_mse": 0.8008301005217484,
       "norm_total_volume_error": 0.3284529746800279,
       "rank_calibration": 0.0507692307692307,
-      "sided_w1": 88.83654503217022,
+      "sided_w1": 88.8365450321702,
       "total_volume_crps": 0.3166706086049289
+     }
+    },
+    {
+     "model_id": "skewnorm_mixture__kmax1",
+     "model_name": "skewnorm_mixture",
+     "prediction_id": "pred_9f5c398f1dab",
+     "checkpoint": "params.yaml",
+     "n_test_samples": 1950,
+     "n_generation_draws": 1,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 6.716337799902492,
+      "full_field_ot": 168931374.99787185,
+      "log1p_flow_mse": 3.420031321295491,
+      "norm_total_volume_error": 0.328453089952992,
+      "rank_calibration": 0.0507692307692307,
+      "sided_w1": 319.9833539403851,
+      "total_volume_crps": 0.3166707210947901
      }
     },
     {
@@ -506,12 +614,110 @@
      "row_status": "ok",
      "values": {
       "energy_score": 4.154436541075247,
-      "full_field_ot": 109510001.83142756,
-      "log1p_flow_mse": 2.432722648051937,
+      "full_field_ot": 109510001.83142772,
+      "log1p_flow_mse": 2.4327226480519366,
       "norm_total_volume_error": 0.328453089952992,
       "rank_calibration": 0.0507692307692307,
       "sided_w1": 191.88829099902287,
       "total_volume_crps": 0.3166707210947901
+     }
+    }
+   ]
+  },
+  {
+   "test_dataset_id": "dow30_valday_flow_lag1_2026-06-23",
+   "evaluation_run_id": "eval__20260914_lagged_snapshot_lag1__cfgdc295784a109__20260919T052354Z",
+   "run_created_at_utc": "2026-09-19T05:23:54+00:00",
+   "study_id": "20260914_lagged_snapshot_lag1",
+   "models": [
+    {
+     "model_id": "order_flow_dit__dit-lag1__dow30_v2__s42__cfgc0252ee2f759",
+     "model_name": "order_flow_dit",
+     "prediction_id": "pred_43a05cd811cc",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1920,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 1.5989740338891745,
+      "full_field_ot": 64911737.10689051,
+      "log1p_flow_mse": 0.6610331076937646,
+      "norm_total_volume_error": 0.4946752902712154,
+      "rank_calibration": 0.1979166666666666,
+      "sided_w1": 127.79943910325292,
+      "total_volume_crps": 0.2711135512140262
+     }
+    },
+    {
+     "model_id": "order_flow_dit__dit-lag1__dow30_v2__s42__cfgf7bbc053d67f",
+     "model_name": "order_flow_dit",
+     "prediction_id": "pred_3dbb05316e8d",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1920,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 1.9651639265969336,
+      "full_field_ot": 90420354.65103078,
+      "log1p_flow_mse": 0.6718638479101486,
+      "norm_total_volume_error": 0.5192481271012319,
+      "rank_calibration": 0.1835937499999999,
+      "sided_w1": 149.4771000972787,
+      "total_volume_crps": 0.2672961294138313
+     }
+    },
+    {
+     "model_id": "order_flow_dit_grpo__grpo-lag1__dow30_v2__s42__cfgdec66cf195a1",
+     "model_name": "order_flow_dit_grpo",
+     "prediction_id": "pred_6b99543eb483",
+     "checkpoint": "ckpt/best.pt",
+     "n_test_samples": 1920,
+     "n_generation_draws": 4,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 1.534671832478966,
+      "full_field_ot": 64907996.41827255,
+      "log1p_flow_mse": 0.6122302675812364,
+      "norm_total_volume_error": 0.423493326401181,
+      "rank_calibration": 0.2444661458333333,
+      "sided_w1": 110.61524043246806,
+      "total_volume_crps": 0.2452628933226114
+     }
+    },
+    {
+     "model_id": "skewnorm_mixture__kmax1",
+     "model_name": "skewnorm_mixture",
+     "prediction_id": "pred_ef796ddfb003",
+     "checkpoint": "params.yaml",
+     "n_test_samples": 1920,
+     "n_generation_draws": 1,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 6.734187060281683,
+      "full_field_ot": 169109783.8332968,
+      "log1p_flow_mse": 3.4228464668075778,
+      "norm_total_volume_error": 0.3292093706583441,
+      "rank_calibration": 0.0557291666666666,
+      "sided_w1": 320.80247814480424,
+      "total_volume_crps": 0.3181374973855979
+     }
+    },
+    {
+     "model_id": "skewnorm_mixture__kmax2",
+     "model_name": "skewnorm_mixture",
+     "prediction_id": "pred_279d9cbc8df3",
+     "checkpoint": "params.yaml",
+     "n_test_samples": 1920,
+     "n_generation_draws": 1,
+     "row_status": "ok",
+     "values": {
+      "energy_score": 4.170970904117573,
+      "full_field_ot": 110048706.90315424,
+      "log1p_flow_mse": 2.4333256067117928,
+      "norm_total_volume_error": 0.3292093706583441,
+      "rank_calibration": 0.0557291666666666,
+      "sided_w1": 192.6416703365988,
+      "total_volume_crps": 0.3181374973855979
      }
     }
    ]
@@ -598,6 +804,24 @@
   }
  ],
  "runs": [
+  {
+   "evaluation_run_id": "eval__20260914_lagged_snapshot_lag1__cfgdc295784a109__20260919T052354Z",
+   "study_id": "20260914_lagged_snapshot_lag1",
+   "created_at_utc": "2026-09-19T05:23:54+00:00",
+   "status": "ok",
+   "n_inputs": 5,
+   "n_metrics": 7,
+   "content_hash": "sha256:e6581e985496f9d4ad7be7a6c5972f03630c911bb0d4b1d67e3d58b3c84ee74a"
+  },
+  {
+   "evaluation_run_id": "eval__20260914_lagged_snapshot_lag1__cfgf76624f5195b__20260914T233857Z",
+   "study_id": "20260914_lagged_snapshot_lag1",
+   "created_at_utc": "2026-09-14T23:38:57+00:00",
+   "status": "ok",
+   "n_inputs": 10,
+   "n_metrics": 7,
+   "content_hash": "sha256:796586d3d68e9031f023ef571d1bdc97cc114adf177b1b448771eb8493e626dc"
+  },
   {
    "evaluation_run_id": "eval__20260909_orderflowdit_grpo__cfgf0f51269095c__20260911T185701Z",
    "study_id": "20260909_orderflowdit_grpo",
